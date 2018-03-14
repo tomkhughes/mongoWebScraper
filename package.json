@@ -1,0 +1,31 @@
+{
+  "name": "mongowebscraper",
+  "version": "1.0.0",
+  "description": "web scraper using mongo db",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomkhughes/mongoWebScraper.git"
+  },
+  "keywords": [
+    "mongo"
+  ],
+  "author": "Tom K Hughes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomkhughes/mongoWebScraper/issues"
+  },
+  "homepage": "https://github.com/tomkhughes/mongoWebScraper#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^5.0.10",
+    "request": "^2.85.0"
+  }
+}
