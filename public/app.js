@@ -2,15 +2,9 @@
 $.getJSON("/articles", function(data) {
     // For each one
     for (var i = 0; i < data.length; i++) {
-        // Display the apropos information on the page
         const link = data[i].link;
         const title = data[i].title;
         const id = data[i]._id;
-        // WORKING //
-
-        // $(".articleTitle").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "</p>"+"<a href='" + link + "' id='1'>READ FULL ARTICLE</a>");
-        // $("p").addClass('card-panel');
-        // $('a').addClass('waves-effect waves-light btn blue lighten-1').attr('id', 'btnSignUp');
         $('.ulDiv').append("<ul id='li' class='collapsible' data-collapsible='accordion'><li class='list'><div class='collapsible-header'>" +
             title + "</div><div class='collapsible-body'><a class='waves-effect waves-light btn blue' href='" + link +
             "'>READ FULL ARTICLE</a></div></li><li><div class='collapsible-header'><i class='material-icons'>chat_bubble_outline</i>Add a Comment</div><div class='collapsible-body'><form class='submitForm' id=" + id + "><div class='row'><div class='input-field col s2'></div><div class='input-field col s8'><i class='material-icons prefix'>account_circle</i><input id='author_name-" + id + "' name='name' type='text' class='validate'><label for='author_name'>Type Your Name:</label></div></div><div class='row'><div class='input-field col s2'></div><div class='input-field col s8'><i class='material-icons prefix'>chat_bubble_outline</i><textarea id='comment_box-" + id + "' name='comment' class='materialize-textarea'></textarea><label for='comment_box'>Add Comment:</label></div></div><div class='row'><div class='input-field col s2'></div><div class='input-field col s8'><center><input class='btn addComment submit' data-id='" + id + "' type='button' value='Submit'></center></div></div></form></div></li></ul><div class='comments-" + id + "'></div>");
@@ -18,9 +12,6 @@ $.getJSON("/articles", function(data) {
             sendContactForm();
             return false;
         });
-        // $("").append("<div class='collapsible-body'><form id='form-add-{{_id}}' action='add/comment/{{_id}}' method='post'><div class='row'><div class='input-field col s2'></div><div class='input-field col s8'><i class='material-icons prefix'>account_circle</i><input id='author_name' name='name' type='text' class='validate'><label for='author_name'>Type Your Name:</label></div></div><div class='row'><div class='input-field col s2'></div><div class='input-field col s8'><i class='material-icons prefix'>chat_bubble_outline</i><textarea id='comment_box' name='comment' class='materialize-textarea'></textarea><label for='comment_box'>Add Comment:</label></div></div><div class='row'><div class='input-field col s2'></div><div class='input-field col s8'><center><input class='btn addComment' data-id='{{_id}}' type='submit' value='Submit'></center></div></div></form></div>");
-        // $("").append("");
-
     }
 });
 $(document).ready(function() {
@@ -66,8 +57,6 @@ $(document).on("click", ".deleteComment", function() {
 
     // Get id of comment to be deleted
     var thisId = $(this).attr("data-id");
-    // var commentId = $(this).data("id");
-
     // URL root (so it works in either LocalHost or Heroku)
     var baseURL = window.location.origin;
 
