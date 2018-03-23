@@ -1,4 +1,4 @@
-var express = require("express");
+    var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
@@ -46,7 +46,6 @@ app.get("/scrape", function(req, res) {
         $("section.contentItem__content").each(function(i, element) {
             // Save an empty result object
             var result = {};
-
             // Add the text and href of every link, and save them as properties of the result object
             result.title = $(element).children().find('h1').text();
             result.paragraph = $(element).children().find('p').text();
@@ -73,16 +72,7 @@ app.get("/scrape", function(req, res) {
                     console.log('Repeated DB Content. Not saved to DB.')
                 }
             });
-            // // Create a new Article using the `result` object built from scraping
-            // db.Article.create(result)
-            //   .then(function(dbArticle) {
-            //     // View the added result in the console
-            //     console.log(dbArticle);
-            //   })
-            //   .catch(function(err) {
-            //     // If an error occurred, send it to the client
-            //     return res.json(err);
-            //   });
+
         });
         // If we were able to successfully scrape and save an Article, send a message to the client
         res.redirect("/");
@@ -137,6 +127,22 @@ app.post("/articles/:id", function(req, res) {
             // If an error occurred, send it to the client
             res.json(err);
         });
+});
+// Delete Comment Route
+app.post('/articles/:id', function (req, res){
+  // Collect comment id
+  var commentId = req.params.id;
+  // Find and Delete the Comment using the Id
+  db.Article.findByIdAndRemove(req.params.id, function (err, todo) {  
+    if (err) {
+      console.log(err);
+    } 
+    else {
+      // Send Success Header
+      res.sendStatus(200);
+    }
+  });
+
 });
 
 // Start the server
