@@ -38,18 +38,20 @@ mongoose.connect("mongodb://localhost/scraper", {
 // A GET route for scraping the echojs website
 app.get("/scrape", function(req, res) {
     // First, we grab the body of the html with request
-    axios.get("http://www.espn.com/").then(function(response) {
+    axios.get("http://bleacherreport.com/").then(function(response) {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
         var $ = cheerio.load(response.data);
 
         // Now, we grab every h2 within an article tag, and do the following:
-        $("section.contentItem__content").each(function(i, element) {
+        $(".articleContent").each(function(i, element) {
             // Save an empty result object
             var result = {};
             // Add the text and href of every link, and save them as properties of the result object
-            result.title = $(element).children().find('h1').text();
-            result.paragraph = $(element).children().find('p').text();
-            result.link = 'http://www.espn.com' + $(this).children().attr("href");
+            result.title = $(element).children().find('h3').text();
+            // result.paragraph = $(element).children().find('p').text();
+            result.link = $(element).children().attr("href");
+            console.log(result.link);
+            // $(element).children().find('a').text();
 
             db.Article.count({ title: result.title }, function(err, test) {
                 //if the test is 0, the entry is unique and good to save
