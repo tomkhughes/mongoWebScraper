@@ -32,7 +32,9 @@ app.use(express.static("public"));
 // mongoose.connect("mongodb://localhost/scraper", {
 //     useMongoClient: true
 // });
+var url = 'mongodb://tomkhughes:root@ds123399.mlab.com:23399/scraper';
 
+//heroku config:set MONGOLAB_URI=mongodb://tomkhughes:root@ds123399.mlab.com:23399/scraper
 
 if(process.env.MONGODB_URI){
   mongoose.connect(process.env.MONGODB_URI, function(){
@@ -40,7 +42,7 @@ if(process.env.MONGODB_URI){
   });
 }
 else{
-  mongoose.connect('mongodb://localhost/scraper', function(){
+  mongoose.connect(url, function(){
     console.log("local load");
   });
 }
