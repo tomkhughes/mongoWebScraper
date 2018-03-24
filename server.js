@@ -32,6 +32,8 @@ app.use(express.static("public"));
 // mongoose.connect("mongodb://localhost/scraper", {
 //     useMongoClient: true
 // });
+
+
 if(process.env.MONGODB_URI){
   mongoose.connect(process.env.MONGODB_URI, function(){
     console.log("uri connected");
