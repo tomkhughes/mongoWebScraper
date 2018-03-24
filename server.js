@@ -41,7 +41,8 @@ app.get("/scrape", function(req, res) {
     axios.get("http://bleacherreport.com/").then(function(response) {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
         var $ = cheerio.load(response.data);
-
+        // Error Handler to prevent duplicates
+        var titlesArray = [];
         // Now, we grab every h2 within an article tag, and do the following:
         $(".articleContent").each(function(i, element) {
             // Save an empty result object
@@ -52,7 +53,8 @@ app.get("/scrape", function(req, res) {
             result.link = $(element).children().attr("href");
             console.log(result.link);
             // $(element).children().find('a').text();
-
+        if(titlesArray.indexOf(result.title) == -1){
+        titlesArray.push(result.title);
             db.Article.count({ title: result.title }, function(err, test) {
                 //if the test is 0, the entry is unique and good to save
                 if (test == 0) {
@@ -74,6 +76,7 @@ app.get("/scrape", function(req, res) {
                     console.log('Repeated DB Content. Not saved to DB.')
                 }
             });
+        }
 
         });
         // If we were able to successfully scrape and save an Article, send a message to the client
