@@ -1,4 +1,4 @@
-    var express = require("express");
+var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
@@ -26,9 +26,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Use express.static to serve the public folder as a static directory
 app.use(express.static("public"));
 
-// By default mongoose uses callbacks for async queries, we're setting it to use promises (.then syntax) instead
-// Connect to the Mongo DB
-// mongoose.Promise = Promise;
+
+// THIS CODE WORKS to connect to local db
 // mongoose.connect("mongodb://localhost/scraper", {
 //     useMongoClient: true
 // });
@@ -180,7 +179,7 @@ app.post('/articles/:id', function (req, res){
 
 });
 // Server and set up for Heroku app
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 27017;
 app.listen(PORT, function() {
   console.log('App listening on PORT: ' + PORT);
 });
