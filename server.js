@@ -28,9 +28,35 @@ app.use(express.static("public"));
 
 // By default mongoose uses callbacks for async queries, we're setting it to use promises (.then syntax) instead
 // Connect to the Mongo DB
-mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/scraper", {
-    useMongoClient: true
+// mongoose.Promise = Promise;
+// mongoose.connect("mongodb://localhost/scraper", {
+//     useMongoClient: true
+// });
+if(process.env.MONGODB_URI){
+  mongoose.connect(process.env.MONGODB_URI, function(){
+    console.log("uri connected");
+  });
+}
+else{
+  mongoose.connect('mongodb://localhost/scraper', function(){
+    console.log("local load");
+  });
+}
+var mongoDB = mongoose.connection;
+
+// Show any Mongoose errors
+mongoDB.on('error', function(err) {
+  console.log('Mongoose Error: ', err);
+});
+
+// Show any Mongoose errors
+mongoDB.on('error', function(err) {
+  console.log('Mongoose Error: ', err);
+});
+
+// Once logged into mongoDB mongoDB through mongoose, log a success message
+mongoDB.once('open', function() {
+  console.log('Mongoose connection successful')
 });
 
 // Routes
@@ -76,7 +102,7 @@ app.get("/scrape", function(req, res) {
                     console.log('Repeated DB Content. Not saved to DB.')
                 }
             });
-        }
+        }   
 
         });
         // If we were able to successfully scrape and save an Article, send a message to the client
@@ -149,8 +175,12 @@ app.post('/articles/:id', function (req, res){
   });
 
 });
-
-// Start the server
+// Server and set up for Heroku app
+var PORT = process.env.PORT || 3000;
 app.listen(PORT, function() {
-    console.log("App running on port " + PORT + "!");
+  console.log('App listening on PORT: ' + PORT);
 });
+// // Start the server
+// app.listen(PORT, function() {
+//     console.log("App running on port " + PORT + "!");
+// });
